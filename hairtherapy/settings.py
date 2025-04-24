@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_framework',
     'django.contrib.humanize',
-    'crispy_forms',
+    # 'crispy_forms',
     'crispy_bootstrap5',
 
 ]
