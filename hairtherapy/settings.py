@@ -181,7 +181,7 @@ STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51RGUDKPw1l0nfkrUOKSC5p1ixwSbMQUOAfdsbwfGqzUnLNDca5goXAnbETDXgxuWY5tCvbh4AXCN4MQAjKF54KL000tuDUhcnP'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #'django.core.mail.backends.console.EmailBackend' 
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
