@@ -28,7 +28,8 @@ DEBUG = True
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tbsassistant.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://tbsassistant.onrender.com']
 
 
 # Application definition
