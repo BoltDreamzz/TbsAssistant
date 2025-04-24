@@ -174,7 +174,10 @@ STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STRIPE_SECRET_KEY = 'sk_test_51RGUDKPw1l0nfkrUIxa0XCsXyIAGfNcifMNi9irnibUtiokuY8Foe4dWdFAIWsvRALe46W6GB75iP8yd30pZEVPd00UqF1Eygb'
+STRIPE_SECRET_KEY = ''
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+
+
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51RGUDKPw1l0nfkrUOKSC5p1ixwSbMQUOAfdsbwfGqzUnLNDca5goXAnbETDXgxuWY5tCvbh4AXCN4MQAjKF54KL000tuDUhcnP'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #'django.core.mail.backends.smtp.EmailBackend'
