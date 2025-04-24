@@ -1,0 +1,36 @@
+{% extends "partials/base.html" %}
+{% load i18n %}
+{%load crispy_forms_tags%}
+{% load account %}
+
+{% block content %}
+
+
+<div class="max-w-md flex flex-col items-center mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-xl font-bold mb-4">{% trans "Sign In" %}</h2>
+
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {% for field in form %}
+      <div class="mb-4 w-full">
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+          {{ field.label }}
+        </label>
+        {{ field }}
+        {% if field.errors %}
+          <p class="text-sm text-red-600 mt-1">{{ field.errors|join:", " }}</p>
+        {% endif %}
+      </div>
+      {%endfor%}
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">
+      {% trans "Sign In" %}
+    </button>
+  </form>
+
+  <p class="text-sm mt-4 text-center">
+    {% blocktranslate %}Don't have an account? <a href="{{ signup_url }}" class="text-blue-600">Sign up</a>{% endblocktranslate %}
+  </p>
+</div>
+{% endblock %}

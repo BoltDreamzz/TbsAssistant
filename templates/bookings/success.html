@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<h1>🎉 Your booking was successful!</h1>
+<p>Thank you for choosing our hair therapy services.</p>
+</body>
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold">Booking Details</h2>
+    <p><strong>Service:</strong> {{ booking.service.name }}</p>
+    <p><strong>Date:</strong> {{ booking.date }}</p>
+    <p><strong>Time:</strong> {{ booking.time }}</p>
+    <p><strong>Name:</strong> {{ booking.name }}</p>
+    <p><strong>Email:</strong> {{ booking.email }}</p>
+    <p><strong>Phone:</strong> {{ booking.phone }}</p>
+    <p><strong>Price:</strong> ₦{{ booking.service.price }}</p>
+    <p><strong>Payment Status:</strong> {{ booking.payment_status }}</p>
+    <p><strong>Booking Status:</strong> {{ booking.status }}</p>
+</div>
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold">Next Steps</h2>
+    <p>We will contact you shortly to confirm your appointment.</p>
+    <p>If you have any questions, feel free to reach out to us.</p>
+</div>
+
+{%endblock%}
