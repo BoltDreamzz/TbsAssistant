@@ -4,63 +4,44 @@
 {%block content%}
 
 
-<!-- shop/templates/shop/product_detail.html -->
-
-<h1></h1>
-
-<!-- shop/templates/shop/product_detail.html -->
-
-{% if product.is_flash_sale_active %}
-    <h2 style="color: red;">Flash Sale Price: ₦{{ product.discount_price }}</h2>
-    <div id="flipdown" class="flipdown"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/flipdown@0.3.2/dist/flipdown.min.js"></script>
-    <script>
-        const flipdown = new FlipDown({ 
-            until: {{ product.flash_sale_remaining_seconds }} 
-        }).start();
-    </script>
-{% else %}
-    <h2>Price: ₦{{ product.normal_price }}</h2>
-{% endif %}
 
 <!-- Simple Add to Cart Form -->
-<form method="post" action="{% url 'shop:add_to_cart' product.id %}">
-    {% csrf_token %}
-    <button type="submit">Add to Cart</button>
-</form>
 
 <!-- Product Section -->
-<section class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-3">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">{{product.name}}</h1>
+    <div class="text-sm text-gray-500">
+        <a href="/" class="hover:text-gray-700">Home</a> / 
+        <a href="{%url 'shop:product_list'%}" class="hover:text-gray-700">Shop</a> / 
+        <a class="hover:text-gray-700">{{product.name}}</a> 
+        <!-- <span class="text-gray-700">Premium Leather Jacket</span> -->
+    </div>
+</div>
+<section class="container mx-auto px-4 py-4">
+    
     <div class="flex flex-col md:flex-row -mx-4">
         <!-- Product Images -->
         <div class="md:w-1/2 px-4 mb-6 md:mb-0">
             <div class="sticky top-20">
                 <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
-                    <img src="{{product.image.url}}" 
-                         alt="{{product.name}}" 
-                         class="w-full h-auto object-cover">
+                    <img src="{{product.image.url}}" alt="{{product.name}}" class="w-full h-auto object-cover">
                 </div>
                 <div class="grid grid-cols-4 gap-2">
                     <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
-                        <img src="{{product.image.url}}" 
-                             alt="{{product.name}} - Front" 
-                             class="w-full h-auto object-cover">
+                        <img src="{{product.image.url}}" alt="{{product.name}} - Front"
+                            class="w-full h-auto object-cover">
                     </div>
                     <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
-                        <img src="{{product.image.url}}" 
-                             alt="{{product.name}} - Back" 
-                             class="w-full h-auto object-cover">
+                        <img src="{{product.image.url}}" alt="{{product.name}} - Back"
+                            class="w-full h-auto object-cover">
                     </div>
                     <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
-                        <img src="{{product.image.url}}" 
-                             alt="{{product.name}} - Side" 
-                             class="w-full h-auto object-cover">
+                        <img src="{{product.image.url}}" alt="{{product.name}} - Side"
+                            class="w-full h-auto object-cover">
                     </div>
                     <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
-                        <img src="{{product.image.url}}" 
-                             alt="{{product.name}} - Detail" 
-                             class="w-full h-auto object-cover">
+                        <img src="{{product.image.url}}" alt="{{product.name}} - Detail"
+                            class="w-full h-auto object-cover">
                     </div>
                 </div>
             </div>
@@ -68,8 +49,8 @@
 
         <!-- Product Details -->
         <div class="md:w-1/2 px-4">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">{{product.name}}</h1>
-            <div class="flex items-center mb-4">
+            <!-- <h1 class="text-2xl md:text-3xl font-bold mb-2">{{product.name}}</h1> -->
+            <!-- <div class="flex items-center mb-4">
                 <div class="flex text-yellow-400 mr-2">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -78,11 +59,11 @@
                     <i class="fas fa-star-half-alt"></i>
                 </div>
                 <span class="text-gray-600 text-sm">4.5 (128 reviews)</span>
-            </div>
+            </div> -->
 
             <div class="mb-4">
-                <span class="text-3xl font-bold text-gray-900">${{product.discount_price|intcomma}}</span>
-                <span class="ml-2 text-lg text-gray-500 line-through">${{product.normal_price|intcomma}}</span>
+                <span class="text-3xl font-bold text-gray-900">₦{{product.discount_price|intcomma}}</span>
+                <span class="ml-2 text-lg text-gray-500 line-through">₦{{product.normal_price|intcomma}}</span>
                 <span class="ml-2 bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-medium">25% OFF</span>
             </div>
 
@@ -113,42 +94,66 @@
                 </div>
             </div>
             {%endif%}
+            {% if product.is_flash_sale_active %}
+            <h2 style="color: red;">Flash Sale Price: ₦{{ product.discount_price }}</h2>
+            <div id="flipdown" class="flipdown"></div>
+
+            <script src="https://cdn.jsdelivr.net/npm/flipdown@0.3.2/dist/flipdown.min.js"></script>
+            <script>
+                const flipdown = new FlipDown({
+                    until: {{ product.flash_sale_remaining_seconds }} 
+                }).start();
+            </script>
+            {% endif %}
+           
 
             <div class="mb-6">
                 <p class="text-gray-600 mb-4">
                     {{product.description}}
                 </p>
                 <div class="flex items-center text-sm text-gray-500 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-4 mr-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-                      </svg>
-                      
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                        stroke="currentColor" class="size-4 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                    </svg>
+
                     <span>In stock - Ready to ship</span>
                 </div>
                 <div class="flex items-center text-sm text-gray-500 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-4 mr-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                      </svg>
-                      
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                        stroke="currentColor" class="size-4 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                    </svg>
+
                     <span>Free shipping on orders over $100</span>
                 </div>
-                
+
             </div>
 
-            
+
 
             <!-- Size Selection -->
+             
             <div class="mb-6">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-sm font-medium text-gray-700">Size: <span class="text-gray-500">Medium</span></h3>
-                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Size Guide</a>
+                    <h3 class="text-sm font-medium text-gray-700">Size: <span class="text-gray-500">{{product.sizes.nam|default:"Medium"}}</span></h3>
+                    <!-- <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Size Guide</a> -->
                 </div>
                 <div class="grid grid-cols-5 gap-2">
-                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">XS</button>
-                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">S</button>
-                    <button class="py-2 border-2 border-gray-900 rounded-md text-sm font-medium text-gray-900 bg-gray-50">M</button>
-                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">L</button>
-                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">XL</button>
+                    {%for p in product.sizes.all%}
+                    <button
+                        class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">{{p.name}}</button>
+                    {%endfor%}
+                    <!-- <button
+                        class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">S</button>
+                    <button
+                        class="py-2 border-2 border-gray-900 rounded-md text-sm font-medium text-gray-900 bg-gray-50">M</button>
+                    <button
+                        class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">L</button>
+                    <button
+                        class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">XL</button> -->
                 </div>
             </div>
 
@@ -156,31 +161,46 @@
             <div class="mb-6">
                 <h3 class="text-sm font-medium text-gray-700 mb-2">Quantity:</h3>
                 <div class="flex">
-                    <button class="w-10 h-10 border border-gray-300 rounded-l-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
+                    <button
+                        class="w-10 h-10 border border-gray-300 rounded-l-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
                         <i class="fas fa-minus"></i>
                     </button>
-                    <input type="number" value="1" min="1" class="w-16 h-10 border-t border-b border-gray-300 text-center text-gray-700 focus:outline-none">
-                    <button class="w-10 h-10 border border-gray-300 rounded-r-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
+                    <input type="number" value="1" min="1"
+                        class="w-16 h-10 border-t border-b border-gray-300 text-center text-gray-700 focus:outline-none">
+                    <button
+                        class="w-10 h-10 border border-gray-300 rounded-r-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Add to Cart -->
-            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-6">
-                <button class="flex-1 bg-gray-900 text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                    Add to Cart
-                </button>
-                <button class="flex-1 bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                    Buy Now
-                </button>
-                <button class="w-12 h-12 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                      </svg>
-                      
-                </button>
-            </div>
+            <form method="post" action="{% url 'shop:add_to_cart' product.id %}">
+                {% csrf_token %}
+                <!-- <button></button> -->
+
+
+
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-6">
+                    <button type="submit"
+                        class="flex-1 bg-gray-900 text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        Add to Cart
+                    </button>
+                    <button disabled
+                        class="flex-1 bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        How to use
+                    </button>
+                    <button
+                        class="w-12 h-12 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+
+                    </button>
+                </div>
+            </form>
 
             <!-- Product Details Accordion -->
             <div class="border-t border-gray-200 pt-6">
@@ -208,8 +228,10 @@
                     </button>
                     <div class="mt-2 hidden">
                         <p class="text-gray-600">
-                            Free standard shipping on orders over $100. Expedited and international shipping options available at checkout.
-                            We accept returns within 30 days of delivery. Items must be unworn with original tags attached.
+                            Free standard shipping on orders over $100. Expedited and international shipping options
+                            available at checkout.
+                            We accept returns within 30 days of delivery. Items must be unworn with original tags
+                            attached.
                         </p>
                     </div>
                 </div>
@@ -220,7 +242,8 @@
                     </button>
                     <div class="mt-2 hidden">
                         <p class="text-gray-600">
-                            Spot clean with a damp cloth. For deeper cleaning, we recommend professional leather cleaning services.
+                            Spot clean with a damp cloth. For deeper cleaning, we recommend professional leather
+                            cleaning services.
                             Apply leather conditioner every 6-12 months to maintain suppleness and prevent drying.
                         </p>
                     </div>
@@ -238,9 +261,8 @@
             <!-- Product 1 -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80" 
-                         alt="Denim Jacket" 
-                         class="w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80"
+                        alt="Denim Jacket" class="w-full h-64 object-cover">
                     <div class="absolute top-2 right-2 bg-white rounded-full p-1">
                         <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
                     </div>
@@ -269,9 +291,8 @@
             <!-- Product 2 -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" 
-                         alt="Bomber Jacket" 
-                         class="w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
+                        alt="Bomber Jacket" class="w-full h-64 object-cover">
                     <div class="absolute top-2 right-2 bg-white rounded-full p-1">
                         <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
                     </div>
@@ -300,9 +321,8 @@
             <!-- Product 3 -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" 
-                         alt="Suede Jacket" 
-                         class="w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"
+                        alt="Suede Jacket" class="w-full h-64 object-cover">
                     <div class="absolute top-2 right-2 bg-white rounded-full p-1">
                         <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
                     </div>
@@ -331,9 +351,8 @@
             <!-- Product 4 -->
             <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=992&q=80" 
-                         alt="Puffer Jacket" 
-                         class="w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=992&q=80"
+                        alt="Puffer Jacket" class="w-full h-64 object-cover">
                     <div class="absolute top-2 right-2 bg-white rounded-full p-1">
                         <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
                     </div>
@@ -420,7 +439,8 @@
             </div>
 
             <div class="mt-6">
-                <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <button
+                    class="w-full bg-gray-900 text-white py-2 px-4 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     Write a Review
                 </button>
             </div>
@@ -430,7 +450,8 @@
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold">Recent Reviews</h3>
                 <div class="relative">
-                    <select class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                    <select
+                        class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                         <option>Most Recent</option>
                         <option>Highest Rated</option>
                         <option>Lowest Rated</option>
@@ -445,7 +466,9 @@
             <div class="border-b border-gray-200 pb-6 mb-6">
                 <div class="flex justify-between mb-2">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">JD</div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">
+                            JD</div>
                         <div>
                             <h4 class="font-medium text-gray-800">John Doe</h4>
                             <p class="text-sm text-gray-500">January 15, 2023</p>
@@ -461,16 +484,15 @@
                 </div>
                 <h5 class="font-medium text-gray-800 mb-2">Exceptional quality and style</h5>
                 <p class="text-gray-600 mb-3">
-                    This jacket exceeded my expectations. The leather is buttery soft yet durable, and the craftsmanship is outstanding. 
+                    This jacket exceeded my expectations. The leather is buttery soft yet durable, and the craftsmanship
+                    is outstanding.
                     I've received numerous compliments whenever I wear it. Definitely worth the investment!
                 </p>
                 <div class="flex space-x-2 mb-3">
-                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" 
-                         alt="Customer photo" 
-                         class="w-16 h-16 object-cover rounded">
-                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" 
-                         alt="Customer photo" 
-                         class="w-16 h-16 object-cover rounded">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                        alt="Customer photo" class="w-16 h-16 object-cover rounded">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                        alt="Customer photo" class="w-16 h-16 object-cover rounded">
                 </div>
                 <div class="flex items-center text-sm text-gray-500">
                     <button class="flex items-center mr-4 hover:text-gray-700">
@@ -484,7 +506,9 @@
             <div class="border-b border-gray-200 pb-6 mb-6">
                 <div class="flex justify-between mb-2">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">JS</div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">
+                            JS</div>
                         <div>
                             <h4 class="font-medium text-gray-800">Jane Smith</h4>
                             <p class="text-sm text-gray-500">December 3, 2022</p>
@@ -500,8 +524,10 @@
                 </div>
                 <h5 class="font-medium text-gray-800 mb-2">Great jacket, runs slightly large</h5>
                 <p class="text-gray-600 mb-3">
-                    Beautiful jacket with excellent quality leather. I ordered my usual size but found it to be a bit roomy, 
-                    especially in the shoulders. I'd recommend sizing down if you prefer a more fitted look. Otherwise, it's perfect!
+                    Beautiful jacket with excellent quality leather. I ordered my usual size but found it to be a bit
+                    roomy,
+                    especially in the shoulders. I'd recommend sizing down if you prefer a more fitted look. Otherwise,
+                    it's perfect!
                 </p>
                 <div class="flex items-center text-sm text-gray-500">
                     <button class="flex items-center mr-4 hover:text-gray-700">
@@ -515,7 +541,9 @@
             <div class="mb-6">
                 <div class="flex justify-between mb-2">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">RJ</div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">
+                            RJ</div>
                         <div>
                             <h4 class="font-medium text-gray-800">Robert Johnson</h4>
                             <p class="text-sm text-gray-500">November 18, 2022</p>
@@ -531,8 +559,10 @@
                 </div>
                 <h5 class="font-medium text-gray-800 mb-2">Good quality but zipper issues</h5>
                 <p class="text-gray-600 mb-3">
-                    The leather quality is excellent and the jacket looks great. However, I've had some issues with the main zipper sticking. 
-                    Customer service was responsive and offered to replace it, so I'm bumping up my rating. Just be aware of potential zipper problems.
+                    The leather quality is excellent and the jacket looks great. However, I've had some issues with the
+                    main zipper sticking.
+                    Customer service was responsive and offered to replace it, so I'm bumping up my rating. Just be
+                    aware of potential zipper problems.
                 </p>
                 <div class="flex items-center text-sm text-gray-500">
                     <button class="flex items-center mr-4 hover:text-gray-700">
@@ -543,7 +573,8 @@
             </div>
 
             <div class="flex justify-center mt-8">
-                <button class="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <button
+                    class="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     Load More Reviews
                 </button>
             </div>

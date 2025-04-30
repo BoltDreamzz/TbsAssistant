@@ -1,12 +1,16 @@
-# shop/models.py
-
 from django.db import models
 from django.utils import timezone
 
 class Category(models.Model):
-    """Model representing a product category."""
+    """Model representing a category of products."""
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Size(models.Model):
+    """Model representing the size of a product."""
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -25,8 +29,12 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True, default='default.jpg')
     description = models.TextField(null=True, blank=True)
     stock = models.PositiveIntegerField(default=0)  # Add stock field
+    sizes = models.ManyToManyField(Size, blank=True)
 
     # Other fields like description, image, etc.
+
+    def __str__(self):
+        return self.name
 
     def is_flash_sale_active(self):
         now = timezone.now()
@@ -42,11 +50,8 @@ class Product(models.Model):
         if self.is_flash_sale_active():
             return int((self.flash_sale_end - timezone.now()).total_seconds())
         return 0
+    
 
-
-# cart/models.py
-
-from django.db import models
 from django.contrib.auth.models import User
 # from shop.models import Product
 
@@ -61,3 +66,5 @@ class CartItem(models.Model):
 
     def get_total_price(self):
         return self.product.get_current_price() * self.quantity
+    
+

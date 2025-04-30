@@ -44,26 +44,8 @@
 
 <!-- shop/templates/shop/homepage.html -->
 
-{% for product in flash_sale_products %}
-<div class="product">
-    {% if product.is_flash_sale_active %}
-    <div class="flash-sale-banner">
-        <strong>Flash Sale: </strong> Get {{ product.name }} for ₦{{ product.discount_price }}!
-    </div>
-    {% endif %}
-    <h3>{{ product.name }}</h3>
-    <p>₦{{ product.normal_price }}</p>
-    <a href="{% url 'shop:product_detail' product.id %}">View Product</a>
-</div>
-{% endfor %}
 
-{% for product in products %}
-<div class="product">
-    <h3>{{ product.name }}</h3>
-    <p>₦{{ product.normal_price }}</p>
-    <a href="{% url 'shop:product_detail' product.id %}">View Product</a>
-</div>
-{% endfor %}
+
 
 <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-8 mb-8">
     <div class="container mx-auto px-4">
@@ -75,6 +57,12 @@
                     class="bg-white text-gray-900 px-6 py-2 rounded-md font-medium hover:bg-gray-100 transition duration-300">
                     Shop Now
                 </button>
+            </div>
+            
+
+            {% if p in product.flash_sale_products.all %}
+            <div class="flash-sale-banner">
+                </strong> Get {{ product.name }} for ₦{{ product.discount_price }}!
             </div>
             <div class="text-center">
                 <p class="text-gray-300 mb-2">Hurry! Sale Ends In:</p>
@@ -97,6 +85,11 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+
+
+
+
         </div>
     </div>
 </section>
@@ -124,7 +117,7 @@
                     class="w-16 h-16 mb-2 rounded-full bg-white border-2 border-black flex items-center justify-center mx-auto shadow-sm">
                     <i class="fas fa-th text-xl"></i>
                 </div>
-                <span class="text-xs font-medium block">All</span>
+                <span class="text-xs font-medium block">{{c.name}}</span>
             </div>
             {%endfor%}
 
@@ -226,9 +219,11 @@
         {%for p in products%}
         <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden relative" data-category="shampoo"
             data-price="24.99" data-popularity="95">
+            {%if p.is_flash_sale_active%}
             <div class="bonanza-badge absolute top-3 left-3 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
                 BONANZA
             </div>
+            {%endif%}
             <div class="relative">
                 <img src="{{p.image.url}}" alt="{{p.name}}" class="w-full h-64 object-cover">
                 <a href="{%url 'shop:product_detail' p.id%}"
@@ -257,279 +252,19 @@
                     </div>
                     <button
                         class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="size-3">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+
                     </button>
                 </div>
             </div>
         </div>
         {%endfor%}
 
-        <!-- Product 2 - Bonanza Item -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden relative" data-category="conditioner"
-            data-price="22.99" data-popularity="88">
-            <div class="bonanza-badge absolute top-3 left-3 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                BONANZA
-            </div>
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Repair Conditioner" class="w-full h-64 object-cover">
-                <a href="#"
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </a>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Repair Conditioner</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">4.0 (96)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$22.99</span>
-                        <span class="ml-2 text-sm text-gray-500 line-through">$29.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Product 3 - Bonanza Item -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden relative" data-category="oil"
-            data-price="34.99" data-popularity="92">
-            <div class="bonanza-badge absolute top-3 left-3 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                BONANZA
-            </div>
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1617897903246-719242758050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Argan Hair Oil" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Argan Hair Oil</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">5.0 (156)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$34.99</span>
-                        <span class="ml-2 text-sm text-gray-500 line-through">$44.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 4 -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden" data-category="shampoo"
-            data-price="19.99" data-popularity="82">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1626784215021-2e914faa9025?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Volumizing Shampoo" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Volumizing Shampoo</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <i class="far fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">3.5 (74)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$19.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 5 -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden" data-category="conditioner"
-            data-price="21.99" data-popularity="78">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Moisturizing Conditioner" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Moisturizing Conditioner</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">4.0 (89)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$21.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden" data-category="treatment"
-            data-price="29.99" data-popularity="85">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1643123645026-5e748302d98b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Hair Mask Treatment" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Hair Mask Treatment</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">4.5 (112)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$29.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 7 -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden" data-category="oil" data-price="27.99"
-            data-popularity="79">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Coconut Hair Oil" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Coconut Hair Oil</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">4.0 (67)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$27.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product 8 -->
-        <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden" data-category="treatment"
-            data-price="39.99" data-popularity="91">
-            <div class="relative">
-                <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                    alt="Keratin Treatment" class="w-full h-64 object-cover">
-                <div
-                    class="quick-view opacity-0 absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300">
-                    <button class="bg-white text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
-                        Quick View
-                    </button>
-                </div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-gray-700 font-medium mb-1">Keratin Treatment</h3>
-                <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400 text-xs mr-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <span class="text-gray-500 text-xs">5.0 (134)</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-gray-900 font-bold">$39.99</span>
-                    </div>
-                    <button
-                        class="bg-gray-900 text-white p-2 rounded-full hover:bg-gray-800 transition-colors duration-300">
-                        <i class="fas fa-shopping-bag"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Load More Button -->
