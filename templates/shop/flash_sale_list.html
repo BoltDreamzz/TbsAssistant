@@ -1,0 +1,13 @@
+<!-- shop/templates/shop/flash_sale_list.html -->
+
+<h1>Current Flash Sales</h1>
+
+{% for product in flash_sales %}
+    <div class="product">
+        <h3>{{ product.name }}</h3>
+        <p>Discount Price: ₦{{ product.discount_price }}</p>
+        <a href="{% url 'product_detail' product.id %}">View Product</a>
+    </div>
+{% empty %}
+    <p>No active flash sales at the moment.</p>
+{% endfor %}

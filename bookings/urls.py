@@ -11,7 +11,10 @@ urlpatterns = [
     path('available-slots/', views.available_slots, name='available_slots'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('booking/<uuid:booking_id>/', views.booking_detail, name='booking_detail'),
-    path('booking/<uuid:booking_id>/download-ics/', views.download_ics, name='download_ics')
+    path('booking/<uuid:booking_id>/download-ics/', views.download_ics, name='download_ics'),
+    path('chatbot/send/', views.chatbot_send, name='chatbot_send'),
+
+
     # path('booking/<uuid:booking_id>/cancel/', views.cancel_booking, name='cancel_booking'),
 
 

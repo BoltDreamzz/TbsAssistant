@@ -1,0 +1,325 @@
+
+
+{% extends 'partials/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>{{ blog.title }}</h1>
+        <p>{{ blog.content }}</p>
+        <a href="{% url 'booking_index' %}" class="btn btn-primary">Order Service</a>
+    </div>
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Breadcrumbs -->
+        <div class="text-sm text-gray-500 mb-6">
+            <a href="#" class="hover:text-teal-600">Home</a> &gt; 
+            <a href="#" class="hover:text-teal-600">Hair Care</a> &gt; 
+            <span class="text-gray-700">Hair Treatment Therapy</span>
+        </div>
+
+        <!-- Article Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold mb-4">Revolutionary Hair Treatment Therapy: A Complete Guide</h1>
+            <div class="flex items-center mb-6">
+                <img src="/placeholder.svg?height=50&width=50" alt="Author" class="w-12 h-12 rounded-full mr-4">
+                <div>
+                    <p class="font-medium">Emma Johnson</p>
+                    <p class="text-gray-500 text-sm">Published on April 27, 2025 • 15 min read</p>
+                </div>
+            </div>
+            <div class="flex space-x-3 mb-6">
+                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">Hair Care</span>
+                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">Treatment</span>
+                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">Therapy</span>
+            </div>
+        </header>
+
+        <!-- Featured Image -->
+        <div class="mb-8">
+            <img src="/placeholder.svg?height=500&width=1000" alt="Hair Treatment Therapy" class="w-full h-auto rounded-lg shadow-md">
+            <p class="text-sm text-gray-500 mt-2">Advanced hair treatment therapy session at a premium salon</p>
+        </div>
+
+        <!-- Article Content -->
+        <article class="prose lg:prose-xl max-w-none">
+            <p class="lead text-xl mb-6">
+                Hair treatment therapy has revolutionized the way we care for our hair, offering solutions for various hair concerns from damage repair to promoting growth. This comprehensive guide explores the latest innovations in hair treatment therapy and how they can transform your hair care routine.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Understanding Hair Treatment Therapy</h2>
+            <p>
+                Hair treatment therapy encompasses a range of specialized treatments designed to address specific hair concerns. Unlike regular conditioning, these therapies penetrate deep into the hair shaft to repair damage from within. Modern hair treatments utilize advanced ingredients and technologies to deliver remarkable results.
+            </p>
+
+            <div class="bg-gray-100 p-6 rounded-lg my-8">
+                <h3 class="text-xl font-bold mb-3">Key Benefits of Hair Treatment Therapy:</h3>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Repairs damaged hair structure</li>
+                    <li>Restores moisture and protein balance</li>
+                    <li>Improves hair elasticity and strength</li>
+                    <li>Enhances shine and manageability</li>
+                    <li>Protects against future damage</li>
+                </ul>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Types of Hair Treatment Therapies</h2>
+            
+            <h3 class="text-xl font-semibold mt-6 mb-3">1. Protein Treatments</h3>
+            <p>
+                Protein treatments are essential for strengthening hair that has been weakened by chemical processes or heat styling. These treatments infuse the hair with keratin and other proteins to rebuild the hair structure from within.
+            </p>
+            <p>
+                For best results, protein treatments should be used every 4-6 weeks, depending on the level of damage. Overuse can lead to protein overload, making hair brittle and stiff.
+            </p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">2. Moisture Treatments</h3>
+            <p>
+                Moisture treatments focus on hydrating dry, parched hair. They typically contain humectants like glycerin and hyaluronic acid that attract and retain moisture in the hair shaft.
+            </p>
+            <p>
+                These treatments are ideal for curly, coily, and textured hair types that tend to be naturally drier. Regular moisture treatments can significantly improve hair elasticity and reduce breakage.
+            </p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">3. Bond Repair Treatments</h3>
+            <p>
+                Bond repair treatments represent the cutting edge of hair therapy technology. They work by reconnecting broken disulfide bonds within the hair structure, which are damaged during chemical processes like coloring and bleaching.
+            </p>
+            <p>
+                These revolutionary treatments can transform severely damaged hair, restoring its integrity and strength from within. Many salons offer professional bond repair services, and there are also at-home versions available.
+            </p>
+
+            <div class="my-8 border-l-4 border-teal-500 pl-4 py-2 bg-teal-50">
+                <p class="italic">
+                    "Bond repair treatments have completely transformed how we approach hair damage. We can now reverse damage that was previously considered permanent." — Dr. Lisa Chen, Trichologist
+                </p>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">How to Choose the Right Hair Treatment</h2>
+            <p>
+                Selecting the appropriate hair treatment depends on your specific hair concerns, type, and condition. Here's a simple guide to help you choose:
+            </p>
+
+            <table class="min-w-full border border-gray-300 my-6">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border border-gray-300 px-4 py-2">Hair Concern</th>
+                        <th class="border border-gray-300 px-4 py-2">Recommended Treatment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2">Breakage & Split Ends</td>
+                        <td class="border border-gray-300 px-4 py-2">Bond Repair + Protein Treatment</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="border border-gray-300 px-4 py-2">Dryness & Frizz</td>
+                        <td class="border border-gray-300 px-4 py-2">Deep Moisture Treatment</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2">Chemical Damage</td>
+                        <td class="border border-gray-300 px-4 py-2">Bond Repair Treatment</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="border border-gray-300 px-4 py-2">Dull, Lifeless Hair</td>
+                        <td class="border border-gray-300 px-4 py-2">Gloss Treatment + Hydration</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">DIY Hair Treatment Recipes</h2>
+            <p>
+                While professional treatments offer powerful results, you can also create effective hair treatments at home using natural ingredients:
+            </p>
+
+            <div class="bg-yellow-50 p-6 rounded-lg my-6 border border-yellow-200">
+                <h3 class="text-xl font-bold mb-3">Avocado & Honey Hair Mask</h3>
+                <p class="mb-3"><strong>Ingredients:</strong></p>
+                <ul class="list-disc pl-6 mb-3">
+                    <li>1 ripe avocado</li>
+                    <li>2 tablespoons honey</li>
+                    <li>1 tablespoon olive oil</li>
+                </ul>
+                <p class="mb-3"><strong>Instructions:</strong></p>
+                <ol class="list-decimal pl-6">
+                    <li>Mash the avocado until smooth</li>
+                    <li>Mix in honey and olive oil</li>
+                    <li>Apply to damp hair, focusing on ends</li>
+                    <li>Cover with a shower cap and leave for 30 minutes</li>
+                    <li>Rinse thoroughly and shampoo as usual</li>
+                </ol>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Professional vs. At-Home Treatments</h2>
+            <p>
+                Both professional salon treatments and at-home options have their place in a comprehensive hair care routine. Professional treatments typically use higher concentrations of active ingredients and specialized application techniques that can't be replicated at home.
+            </p>
+            <p>
+                However, quality at-home treatments can help maintain results between salon visits and provide ongoing care for your hair. For best results, consider a combination approach with periodic professional treatments supplemented by regular at-home care.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Conclusion</h2>
+            <p>
+                Hair treatment therapy offers transformative solutions for virtually every hair concern. By understanding your hair's specific needs and choosing appropriate treatments, you can achieve healthier, more beautiful hair. Whether you opt for professional services, at-home treatments, or a combination of both, consistent care is key to maintaining optimal hair health.
+            </p>
+            <p>
+                Remember that patience is essential—while some treatments deliver immediate results, others require consistent use over time to achieve their full potential. Listen to your hair's needs and adjust your treatment routine accordingly for the best possible outcomes.
+            </p>
+        </article>
+
+        <!-- Author Bio -->
+        <div class="mt-12 p-6 bg-gray-100 rounded-lg">
+            <div class="flex items-start">
+                <img src="/placeholder.svg?height=80&width=80" alt="Emma Johnson" class="w-16 h-16 rounded-full mr-4">
+                <div>
+                    <h3 class="font-bold text-lg">About Emma Johnson</h3>
+                    <p class="text-gray-700 mb-3">
+                        Emma is a certified trichologist and hair care expert with over 10 years of experience in the beauty industry. She specializes in hair treatment therapies and natural hair care solutions.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="text-gray-600 hover:text-teal-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-teal-600"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-teal-600"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Sharing -->
+        <div class="mt-8 flex items-center">
+            <span class="mr-4 font-medium">Share this article:</span>
+            <div class="flex space-x-4">
+                <a href="#" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition">
+                    <i class="fab fa-facebook-f w-4 h-4 flex items-center justify-center"></i>
+                </a>
+                <a href="#" class="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 transition">
+                    <i class="fab fa-twitter w-4 h-4 flex items-center justify-center"></i>
+                </a>
+                <a href="#" class="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition">
+                    <i class="fab fa-pinterest w-4 h-4 flex items-center justify-center"></i>
+                </a>
+                <a href="#" class="bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition">
+                    <i class="fab fa-whatsapp w-4 h-4 flex items-center justify-center"></i>
+                </a>
+                <a href="#" class="bg-blue-800 text-white p-2 rounded-full hover:bg-blue-900 transition">
+                    <i class="fab fa-linkedin-in w-4 h-4 flex items-center justify-center"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Related Articles -->
+        <section class="mt-16">
+            <h2 class="text-2xl font-bold mb-6">Related Articles</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="/placeholder.svg?height=200&width=400" alt="Scalp Care" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-teal-600 text-sm font-medium">Hair Care</span>
+                        <h3 class="font-bold mt-1 mb-2">The Ultimate Guide to Scalp Care</h3>
+                        <p class="text-gray-600 text-sm mb-3">Discover how proper scalp care can transform your hair health and growth...</p>
+                        <a href="#" class="text-teal-600 font-medium hover:text-teal-800">Read More →</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="/placeholder.svg?height=200&width=400" alt="Natural Oils" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-teal-600 text-sm font-medium">Natural Remedies</span>
+                        <h3 class="font-bold mt-1 mb-2">5 Essential Oils for Healthier Hair</h3>
+                        <p class="text-gray-600 text-sm mb-3">Learn how to incorporate natural oils into your hair care routine for amazing results...</p>
+                        <a href="#" class="text-teal-600 font-medium hover:text-teal-800">Read More →</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="/placeholder.svg?height=200&width=400" alt="Hair Growth" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-teal-600 text-sm font-medium">Hair Growth</span>
+                        <h3 class="font-bold mt-1 mb-2">Nutrition Tips for Faster Hair Growth</h3>
+                        <p class="text-gray-600 text-sm mb-3">The foods and supplements that can significantly boost your hair growth...</p>
+                        <a href="#" class="text-teal-600 font-medium hover:text-teal-800">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section class="mt-16">
+            <h2 class="text-2xl font-bold mb-6">Comments (12)</h2>
+            
+            <!-- Comment Form -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="font-bold mb-4">Leave a Comment</h3>
+                <form>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-1">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="comment" class="block text-gray-700 mb-1">Comment</label>
+                        <textarea id="comment" rows="4" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                    </div>
+                    <button type="submit" class="bg-teal-600 text-white px-6 py-2 rounded-md hover:bg-teal-700 transition">Post Comment</button>
+                </form>
+            </div>
+            
+            <!-- Comments List -->
+            <div class="space-y-6">
+                <!-- Comment 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start">
+                        <img src="/placeholder.svg?height=50&width=50" alt="Sarah" class="w-10 h-10 rounded-full mr-4">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="font-bold">Sarah Thompson</h4>
+                                <span class="text-gray-500 text-sm">2 days ago</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                I've been struggling with damaged hair for years after excessive bleaching. I tried the bond repair treatment mentioned in this article and it's been a game changer! My hair feels so much stronger now.
+                            </p>
+                            <button class="text-teal-600 text-sm font-medium hover:text-teal-800">Reply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Nested Reply -->
+                    <div class="ml-12 mt-4 bg-gray-50 p-4 rounded-md">
+                        <div class="flex items-start">
+                            <img src="/placeholder.svg?height=50&width=50" alt="Emma" class="w-8 h-8 rounded-full mr-3">
+                            <div>
+                                <div class="flex items-center mb-1">
+                                    <h5 class="font-bold text-sm">Emma Johnson</h5>
+                                    <span class="text-gray-500 text-xs ml-2">Author</span>
+                                    <span class="text-gray-500 text-xs ml-2">1 day ago</span>
+                                </div>
+                                <p class="text-gray-700 text-sm">
+                                    So glad to hear that, Sarah! Bond repair treatments are truly revolutionary for chemically damaged hair. Keep up with regular treatments for best results!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Comment 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start">
+                        <img src="/placeholder.svg?height=50&width=50" alt="Michael" class="w-10 h-10 rounded-full mr-4">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="font-bold">Michael Rodriguez</h4>
+                                <span class="text-gray-500 text-sm">1 week ago</span>
+                            </div>
+                            <p class="text-gray-700 mb-3">
+                                I tried the avocado and honey mask recipe and was surprised by how well it worked! My hair felt so soft afterward. Do you have any recommendations for how often to use this type of DIY mask?
+                            </p>
+                            <button class="text-teal-600 text-sm font-medium hover:text-teal-800">Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="mt-6 w-full py-3 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition">Load More Comments</button>
+        </section>
+    </main>
+{% endblock %}

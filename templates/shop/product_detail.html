@@ -1,0 +1,554 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block content%}
+
+
+<!-- shop/templates/shop/product_detail.html -->
+
+<h1>{{ product.name }}</h1>
+
+<!-- shop/templates/shop/product_detail.html -->
+
+{% if product.is_flash_sale_active %}
+    <h2 style="color: red;">Flash Sale Price: ₦{{ product.discount_price }}</h2>
+    <div id="flipdown" class="flipdown"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flipdown@0.3.2/dist/flipdown.min.js"></script>
+    <script>
+        const flipdown = new FlipDown({ 
+            until: {{ product.flash_sale_remaining_seconds }} 
+        }).start();
+    </script>
+{% else %}
+    <h2>Price: ₦{{ product.normal_price }}</h2>
+{% endif %}
+
+<!-- Simple Add to Cart Form -->
+<form method="post" action="{% url 'add_to_cart' product.id %}">
+    {% csrf_token %}
+    <button type="submit">Add to Cart</button>
+</form>
+
+<!-- Product Section -->
+<section class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row -mx-4">
+        <!-- Product Images -->
+        <div class="md:w-1/2 px-4 mb-6 md:mb-0">
+            <div class="sticky top-20">
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
+                         alt="Premium Leather Jacket" 
+                         class="w-full h-auto object-cover">
+                </div>
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
+                        <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
+                             alt="Premium Leather Jacket - Front" 
+                             class="w-full h-auto object-cover">
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
+                        <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
+                             alt="Premium Leather Jacket - Back" 
+                             class="w-full h-auto object-cover">
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
+                        <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
+                             alt="Premium Leather Jacket - Side" 
+                             class="w-full h-auto object-cover">
+                    </div>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:border-gray-400">
+                        <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80" 
+                             alt="Premium Leather Jacket - Detail" 
+                             class="w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="md:w-1/2 px-4">
+            <h1 class="text-2xl md:text-3xl font-bold mb-2">Premium Leather Jacket</h1>
+            <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400 mr-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-gray-600 text-sm">4.5 (128 reviews)</span>
+            </div>
+
+            <div class="mb-4">
+                <span class="text-3xl font-bold text-gray-900">$299.99</span>
+                <span class="ml-2 text-lg text-gray-500 line-through">$399.99</span>
+                <span class="ml-2 bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-medium">25% OFF</span>
+            </div>
+
+            <!-- Flash Sale Countdown -->
+            <div class="bg-red-50 border border-red-100 rounded-lg p-4 mb-6">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-bolt text-red-500 mr-2"></i>
+                    <span class="font-semibold text-red-700">Flash Sale Ends In:</span>
+                </div>
+                <div class="grid grid-cols-4 gap-2 text-center" id="countdown">
+                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                        <div class="text-2xl font-bold text-gray-800" id="days">00</div>
+                        <div class="text-xs text-gray-500">Days</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                        <div class="text-2xl font-bold text-gray-800" id="hours">00</div>
+                        <div class="text-xs text-gray-500">Hours</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                        <div class="text-2xl font-bold text-gray-800" id="minutes">00</div>
+                        <div class="text-xs text-gray-500">Minutes</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 shadow-sm">
+                        <div class="text-2xl font-bold text-gray-800" id="seconds">00</div>
+                        <div class="text-xs text-gray-500">Seconds</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-gray-600 mb-4">
+                    Crafted from premium full-grain leather, this timeless jacket features a classic design with modern details. 
+                    Durable, stylish, and built to last, it's the perfect addition to your wardrobe.
+                </p>
+                <div class="flex items-center text-sm text-gray-500 mb-2">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span>In stock - Ready to ship</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-500 mb-2">
+                    <i class="fas fa-truck text-gray-400 mr-2"></i>
+                    <span>Free shipping on orders over $100</span>
+                </div>
+                <div class="flex items-center text-sm text-gray-500">
+                    <i class="fas fa-undo text-gray-400 mr-2"></i>
+                    <span>30-day easy returns</span>
+                </div>
+            </div>
+
+            <!-- Color Selection -->
+            <div class="mb-6">
+                <h3 class="text-sm font-medium text-gray-700 mb-2">Color: <span class="text-gray-500">Brown</span></h3>
+                <div class="flex space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-yellow-800 border-2 border-yellow-900 cursor-pointer ring-2 ring-offset-2 ring-yellow-800"></div>
+                    <div class="w-8 h-8 rounded-full bg-gray-800 border-2 border-gray-900 cursor-pointer"></div>
+                    <div class="w-8 h-8 rounded-full bg-red-800 border-2 border-red-900 cursor-pointer"></div>
+                </div>
+            </div>
+
+            <!-- Size Selection -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-medium text-gray-700">Size: <span class="text-gray-500">Medium</span></h3>
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Size Guide</a>
+                </div>
+                <div class="grid grid-cols-5 gap-2">
+                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">XS</button>
+                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">S</button>
+                    <button class="py-2 border-2 border-gray-900 rounded-md text-sm font-medium text-gray-900 bg-gray-50">M</button>
+                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">L</button>
+                    <button class="py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">XL</button>
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="mb-6">
+                <h3 class="text-sm font-medium text-gray-700 mb-2">Quantity:</h3>
+                <div class="flex">
+                    <button class="w-10 h-10 border border-gray-300 rounded-l-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <input type="number" value="1" min="1" class="w-16 h-10 border-t border-b border-gray-300 text-center text-gray-700 focus:outline-none">
+                    <button class="w-10 h-10 border border-gray-300 rounded-r-md flex items-center justify-center text-gray-600 hover:bg-gray-50">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Add to Cart -->
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-6">
+                <button class="flex-1 bg-gray-900 text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Add to Cart
+                </button>
+                <button class="flex-1 bg-white border border-gray-300 text-gray-700 py-3 px-6 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Buy Now
+                </button>
+                <button class="w-12 h-12 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+
+            <!-- Product Details Accordion -->
+            <div class="border-t border-gray-200 pt-6">
+                <div class="mb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">Product Details</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2">
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>Premium full-grain leather</li>
+                            <li>Quilted polyester lining for warmth</li>
+                            <li>YKK metal zipper closure</li>
+                            <li>Two exterior zip pockets</li>
+                            <li>One interior pocket</li>
+                            <li>Adjustable snap cuffs</li>
+                            <li>Classic fit</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 pt-4 mb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">Shipping & Returns</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2 hidden">
+                        <p class="text-gray-600">
+                            Free standard shipping on orders over $100. Expedited and international shipping options available at checkout.
+                            We accept returns within 30 days of delivery. Items must be unworn with original tags attached.
+                        </p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 pt-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="text-lg font-medium text-gray-900">Care Instructions</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2 hidden">
+                        <p class="text-gray-600">
+                            Spot clean with a damp cloth. For deeper cleaning, we recommend professional leather cleaning services.
+                            Apply leather conditioner every 6-12 months to maintain suppleness and prevent drying.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-8">You May Also Like</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80" 
+                         alt="Denim Jacket" 
+                         class="w-full h-64 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-1">
+                        <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-gray-700 font-medium mb-1">Denim Jacket</h3>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 text-xs mr-1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs">4.0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-900 font-bold">$149.99</span>
+                        <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-200">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1548126032-079a0fb0099d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" 
+                         alt="Bomber Jacket" 
+                         class="w-full h-64 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-1">
+                        <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-gray-700 font-medium mb-1">Bomber Jacket</h3>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 text-xs mr-1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs">4.5</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-900 font-bold">$179.99</span>
+                        <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-200">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1559551409-dadc959f76b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" 
+                         alt="Suede Jacket" 
+                         class="w-full h-64 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-1">
+                        <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-gray-700 font-medium mb-1">Suede Jacket</h3>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 text-xs mr-1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs">5.0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-900 font-bold">$249.99</span>
+                        <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-200">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=992&q=80" 
+                         alt="Puffer Jacket" 
+                         class="w-full h-64 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-1">
+                        <i class="far fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-gray-700 font-medium mb-1">Puffer Jacket</h3>
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 text-xs mr-1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs">3.5</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-900 font-bold">$199.99</span>
+                        <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-200">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="container mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row -mx-4">
+        <div class="md:w-1/3 px-4 mb-6 md:mb-0">
+            <h2 class="text-2xl font-bold mb-4">Customer Reviews</h2>
+            <div class="mb-6">
+                <div class="flex items-center mb-2">
+                    <div class="flex text-yellow-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-700 font-medium">4.5 out of 5</span>
+                </div>
+                <p class="text-gray-500 text-sm">Based on 128 reviews</p>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600 w-8">5★</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full" style="width: 75%"></div>
+                    </div>
+                    <span class="text-sm text-gray-600 w-8 text-right">75%</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600 w-8">4★</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full" style="width: 17%"></div>
+                    </div>
+                    <span class="text-sm text-gray-600 w-8 text-right">17%</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600 w-8">3★</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full" style="width: 5%"></div>
+                    </div>
+                    <span class="text-sm text-gray-600 w-8 text-right">5%</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600 w-8">2★</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full" style="width: 2%"></div>
+                    </div>
+                    <span class="text-sm text-gray-600 w-8 text-right">2%</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-600 w-8">1★</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full" style="width: 1%"></div>
+                    </div>
+                    <span class="text-sm text-gray-600 w-8 text-right">1%</span>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Write a Review
+                </button>
+            </div>
+        </div>
+
+        <div class="md:w-2/3 px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Recent Reviews</h3>
+                <div class="relative">
+                    <select class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                        <option>Most Recent</option>
+                        <option>Highest Rated</option>
+                        <option>Lowest Rated</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 1 -->
+            <div class="border-b border-gray-200 pb-6 mb-6">
+                <div class="flex justify-between mb-2">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">JD</div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">John Doe</h4>
+                            <p class="text-sm text-gray-500">January 15, 2023</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <h5 class="font-medium text-gray-800 mb-2">Exceptional quality and style</h5>
+                <p class="text-gray-600 mb-3">
+                    This jacket exceeded my expectations. The leather is buttery soft yet durable, and the craftsmanship is outstanding. 
+                    I've received numerous compliments whenever I wear it. Definitely worth the investment!
+                </p>
+                <div class="flex space-x-2 mb-3">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" 
+                         alt="Customer photo" 
+                         class="w-16 h-16 object-cover rounded">
+                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" 
+                         alt="Customer photo" 
+                         class="w-16 h-16 object-cover rounded">
+                </div>
+                <div class="flex items-center text-sm text-gray-500">
+                    <button class="flex items-center mr-4 hover:text-gray-700">
+                        <i class="far fa-thumbs-up mr-1"></i> Helpful (15)
+                    </button>
+                    <button class="hover:text-gray-700">Report</button>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="border-b border-gray-200 pb-6 mb-6">
+                <div class="flex justify-between mb-2">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">JS</div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Jane Smith</h4>
+                            <p class="text-sm text-gray-500">December 3, 2022</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <h5 class="font-medium text-gray-800 mb-2">Great jacket, runs slightly large</h5>
+                <p class="text-gray-600 mb-3">
+                    Beautiful jacket with excellent quality leather. I ordered my usual size but found it to be a bit roomy, 
+                    especially in the shoulders. I'd recommend sizing down if you prefer a more fitted look. Otherwise, it's perfect!
+                </p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <button class="flex items-center mr-4 hover:text-gray-700">
+                        <i class="far fa-thumbs-up mr-1"></i> Helpful (8)
+                    </button>
+                    <button class="hover:text-gray-700">Report</button>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="mb-6">
+                <div class="flex justify-between mb-2">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 font-medium mr-3">RJ</div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Robert Johnson</h4>
+                            <p class="text-sm text-gray-500">November 18, 2022</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <h5 class="font-medium text-gray-800 mb-2">Good quality but zipper issues</h5>
+                <p class="text-gray-600 mb-3">
+                    The leather quality is excellent and the jacket looks great. However, I've had some issues with the main zipper sticking. 
+                    Customer service was responsive and offered to replace it, so I'm bumping up my rating. Just be aware of potential zipper problems.
+                </p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <button class="flex items-center mr-4 hover:text-gray-700">
+                        <i class="far fa-thumbs-up mr-1"></i> Helpful (4)
+                    </button>
+                    <button class="hover:text-gray-700">Report</button>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8">
+                <button class="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                    Load More Reviews
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%endblock%}

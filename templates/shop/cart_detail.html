@@ -1,0 +1,13 @@
+<!-- cart/templates/cart/cart_detail.html -->
+
+<h1>Your Cart</h1>
+<ul>
+    {% for item in cart.items.all %}
+        <li>
+            {{ item.product.name }} — {{ item.quantity }} × ₦{{ item.product.get_current_price }}
+            = ₦{{ item.get_total_price }}
+        </li>
+    {% empty %}
+        <li>Your cart is empty.</li>
+    {% endfor %}
+</ul>

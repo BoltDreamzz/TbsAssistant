@@ -134,10 +134,13 @@ def generate_google_calendar_url(booking):
 
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
+from blog.models import Blog  # Assuming you have a Blog model
 
 def index(request):
     services = Service.objects.all()
     serv = services[:2]
+    blogs = Blog.objects.all()  # Assuming you have a Blog model
+    blog_serv = blogs[:3]
 
     if request.method == 'POST':
         try:
@@ -224,7 +227,7 @@ def index(request):
             traceback.print_exc()
             return HttpResponseBadRequest(f"An error occurred: {e}")
 
-    return render(request, 'bookings/index.html', {'services': services, 'serv': serv})
+    return render(request, 'bookings/index.html', {'services': services, 'serv': serv, 'blogs': blogs, 'blog_serv': blog_serv})
 
 
 def booking_detail(request, booking_id):
@@ -234,6 +237,31 @@ def booking_detail(request, booking_id):
 def download_ics(request, booking_id):
     booking = Booking.objects.get(id=booking_id)  # Use `booking_id` here as needed (UUID or integer)
     return generate_ics(booking)  # Call your function
+
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from google.cloud import dialogflow_v2 as dialogflow
+
+@csrf_exempt
+def chatbot_send(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_message = data.get('message')
+
+        # Send message to Dialogflow
+        session_client = dialogflow.SessionsClient()
+        session = session_client.session_path('zinc-crow-440114-q3', 'zinc-crow-440114-q3')
+
+        text_input = dialogflow.TextInput(text=user_message, language_code='en')
+        query_input = dialogflow.QueryInput(text=text_input)
+
+        response = session_client.detect_intent(request={"session": session, "query_input": query_input})
+        bot_reply = response.query_result.fulfillment_text
+
+        return JsonResponse({'reply': bot_reply})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 # @csrf_exempt

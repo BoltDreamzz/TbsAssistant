@@ -42,15 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookings',
+    'django.contrib.humanize',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
-    'django.contrib.humanize',
+    # 'django.contrib.humanize',
     # 'crispy_forms',
     'crispy_bootstrap5',
-
+    'blog',
+    'shop',
 ]
 
 MIDDLEWARE = [
@@ -197,3 +199,9 @@ GOOGLE_CALENDAR_ID = 'e510f6bf8845ce1f7820a8ffbdfb9bf1ac8c61eb2edbb653823c353360
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+import os
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(BASE_DIR, 'credentials2.json')
+
+GOOGLE_APPLICATION_CREDENTIALS = 'credentials2.json'  # Path to your service account key JSON file
