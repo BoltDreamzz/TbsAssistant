@@ -26,13 +26,21 @@ def get_cart(request):
         return Cart.objects.get_or_create(user=request.user)[0]
     else:
         # Use session-based cart for anonymous users
+
         cart_id = request.session.get('cart_id')
         if cart_id:
-            return Cart.objects.get(id=cart_id)
+            try:
+                cart = Cart.objects.get(id=cart_id)
+            except Cart.DoesNotExist:
+                return None
         else:
-            cart = Cart.objects.create()
+            cart = None
+        if cart is None:
+            cart = Cart.objects.create(user=request.user if request.user.is_authenticated else None)
             request.session['cart_id'] = cart.id
-            return cart
+            # cart = Cart.objects.create()
+            # request.session['cart_id'] = cart.id
+        return cart
 
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
