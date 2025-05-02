@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'blog',
     'shop',
+    'telegrambot',
+    'automation',
 ]
 
 MIDDLEWARE = [
